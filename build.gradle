@@ -16,3 +16,31 @@ buildscript {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 31
+    compileSdkVersion = 31
+
+    // Navigation
+    navigationVer = '2.5.0'
+
+    // Dependencies
+    coreKtxVer = '1.7.0'
+    appCompatVer = '1.4.1'
+    androidMaterialVer = '1.5.0'
+
+    // Fragment
+    fragmentKtxVer = '1.4.1'
+
+    // Glide
+    glideVer = '4.13.2'
+
+    // Retrofit
+    retrofitVer = '2.9.0'
+    retrofitMoshiConvVer = '2.9.0'
+
+    // Dagger
+    daggerVer = '2.42'
+}
