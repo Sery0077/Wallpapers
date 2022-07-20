@@ -72,5 +72,6 @@ dependencies {
 
     // RxJava
     implementation "io.reactivex.rxjava3:rxandroid:$rxJavaVer"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rxJavaVer"
     implementation "io.reactivex.rxjava3:rxjava:$rxJavaVer"
 }

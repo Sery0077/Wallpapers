@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Wallpapers</string>
+
+    <!--    -->
+    <string name="header_link_label">link</string>
+    <string name="header_page_regex">page=\d*>; rel="next"</string>
+    <!--    Snackbar-->
+    <string name="snackbar_error">Error loading</string>
+    <string name="snackbar_action">Retry</string>
 </resources>

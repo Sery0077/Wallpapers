@@ -1,17 +1,17 @@
 package sery.vlasenko.wallpapers.ui.base
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.Job
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 abstract class BaseViewModel : ViewModel() {
-    protected lateinit var job: Job
+    protected var disposable: CompositeDisposable = CompositeDisposable()
 
     override fun onCleared() {
-        job.cancel()
+        disposable.dispose()
         super.onCleared()
     }
 
     open fun onPause() {
-        job.cancel()
+        disposable.dispose()
     }
 }
