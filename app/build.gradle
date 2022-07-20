@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
     id 'com.google.secrets_gradle_plugin' version '0.4'
 }
 
@@ -61,10 +62,15 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVer"
     // Retrofit Moshi converter
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitMoshiConvVer"
 
-    // Dagger
-    implementation "com.google.dagger:dagger:$daggerVer"
-    kapt "com.google.dagger:dagger-compiler:$daggerVer"
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVer"
+    kapt "com.google.dagger:hilt-compiler:$hiltVer"
+
+    // RxJava
+    implementation "io.reactivex.rxjava3:rxandroid:$rxJavaVer"
+    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVer"
 }
