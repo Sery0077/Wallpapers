@@ -1,4 +1,4 @@
-package sery.vlasenko.wallpapers.data.dao
+package sery.vlasenko.wallpapers.model.pojo
 
 import sery.vlasenko.wallpapers.ui.base.adapter.RecyclerItem
 

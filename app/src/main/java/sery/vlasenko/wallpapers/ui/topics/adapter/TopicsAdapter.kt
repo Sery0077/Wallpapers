@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_topic.view.*
 import sery.vlasenko.wallpapers.R
-import sery.vlasenko.wallpapers.data.dao.Topic
+import sery.vlasenko.wallpapers.model.pojo.Topic
 import sery.vlasenko.wallpapers.databinding.ItemLoadingBinding
 import sery.vlasenko.wallpapers.databinding.ItemTopicBinding
 import sery.vlasenko.wallpapers.ui.base.adapter.BaseAdapter

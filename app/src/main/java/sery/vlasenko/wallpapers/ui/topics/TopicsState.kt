@@ -1,6 +1,6 @@
 package sery.vlasenko.wallpapers.ui.topics
 
-import sery.vlasenko.wallpapers.data.dao.Topic
+import sery.vlasenko.wallpapers.model.pojo.Topic
 
 sealed class TopicsState {
     object DataLoading : TopicsState()

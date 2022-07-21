@@ -1,4 +1,4 @@
-package sery.vlasenko.wallpapers.data.dao
+package sery.vlasenko.wallpapers.model.pojo
 
 data class Photo(
     val id: String,

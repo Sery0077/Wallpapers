@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/fragmentTopics"
-        android:name="sery.vlasenko.wallpapers.ui.topics.FragmentTopics"
+        android:name="sery.vlasenko.wallpapers.ui.topics.TopicsFragment"
         android:label="FragmentTopics" />
 </navigation>

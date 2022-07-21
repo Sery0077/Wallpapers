@@ -8,14 +8,14 @@ import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
 import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.R
-import sery.vlasenko.wallpapers.data.dao.Topic
-import sery.vlasenko.wallpapers.data.repository.categories.TopicsRepository
+import sery.vlasenko.wallpapers.model.pojo.Topic
+import sery.vlasenko.wallpapers.model.repository.topics.TopicRepository
 import sery.vlasenko.wallpapers.ui.ResponseData
 import sery.vlasenko.wallpapers.ui.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class ViewModelTopics @Inject constructor(private val repository: TopicsRepository) :
+class TopicsViewModel @Inject constructor(private val repository: TopicRepository) :
     BaseViewModel() {
 
     private val _state: MutableLiveData<TopicsState> =

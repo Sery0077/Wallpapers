@@ -13,7 +13,7 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.BuildConfig
-import sery.vlasenko.wallpapers.data.repository.UnsplashService
+import sery.vlasenko.wallpapers.model.repository.UnsplashService
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
