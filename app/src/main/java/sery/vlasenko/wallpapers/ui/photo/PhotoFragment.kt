@@ -11,12 +11,15 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.databinding.FragmentPhotoBinding
 import sery.vlasenko.wallpapers.ui.base.BaseBindingFragment
 import sery.vlasenko.wallpapers.utils.SnackBarHelper
+import sery.vlasenko.wallpapers.utils.gone
 import sery.vlasenko.wallpapers.utils.invisible
 import sery.vlasenko.wallpapers.utils.visible
 import java.io.IOException
@@ -32,6 +35,8 @@ class PhotoFragment :
 
     @Inject
     lateinit var factory: PhotoViewModel.PhotoViewModelFactory.PhotoViewModelAssistedFactory
+
+    private var errorSnackBar: Snackbar? = null
 
     override val model: PhotoViewModel by viewModels {
         PhotoViewModel.PhotoViewModelFactory(photoId, factory)
@@ -75,23 +80,30 @@ class PhotoFragment :
 
     private fun setWallpaper(photo: Bitmap) {
         val wallpaperManager = WallpaperManager.getInstance(requireContext())
-        try {
-            wallpaperManager.setBitmap(photo)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                wallpaperManager.setBitmap(photo)
 
-            Toast.makeText(
-                requireContext(),
-                requireContext().getString(R.string.success_set_wallpaper),
-                Toast.LENGTH_SHORT
-            ).show()
-        } catch (e: IOException) {
-            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT)
-                .show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        requireContext(),
+                        requireContext().getString(R.string.success_set_wallpaper),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: IOException) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
         }
     }
 
     private fun processState(state: PhotoState) {
         when (state) {
             PhotoState.DataLoading -> {
+                errorSnackBar?.dismiss()
                 with(binding) {
                     progressBar.visible()
                     zivPhoto.invisible()
@@ -99,23 +111,20 @@ class PhotoFragment :
                 }
             }
             is PhotoState.DataLoadError -> {
-                SnackBarHelper.errorSnackBar(binding.root) {
+                binding.progressBar.gone()
+                errorSnackBar = SnackBarHelper.errorSnackBar(binding.root) {
                     model.onErrorClick()
                 }
+                errorSnackBar?.show()
             }
             is PhotoState.DataLoaded -> {
+                errorSnackBar?.dismiss()
                 Glide.with(this)
                     .load(state.data.urls.full)
                     .addListener(RequestListener(state.data.urls.full))
                     .into(binding.zivPhoto)
             }
         }
-    }
-
-    lateinit var photo: Bitmap
-
-    private fun onLoadPhotoError() {
-
     }
 
     private fun onPhotoLoaded() {
@@ -134,13 +143,13 @@ class PhotoFragment :
             target: Target<Drawable>?,
             isFirstResource: Boolean
         ): Boolean {
-            SnackBarHelper.errorSnackBar(binding.root) {
+            errorSnackBar = SnackBarHelper.errorSnackBar(binding.root) {
                 Glide.with(this@PhotoFragment)
                     .load(photoUrl)
                     .addListener(RequestListener(photoUrl))
                     .into(binding.zivPhoto)
-                onLoadPhotoError()
             }
+            errorSnackBar?.show()
             return false
         }
 

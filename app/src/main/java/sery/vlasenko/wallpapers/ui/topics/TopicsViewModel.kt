@@ -10,7 +10,6 @@ import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.model.pojo.Topic
 import sery.vlasenko.wallpapers.model.repository.topics.TopicRepository
-import sery.vlasenko.wallpapers.ui.ResponseData
 import sery.vlasenko.wallpapers.ui.base.BaseViewModel
 import sery.vlasenko.wallpapers.utils.Router
 import javax.inject.Inject
@@ -24,6 +23,9 @@ class TopicsViewModel @Inject constructor(private val repository: TopicRepositor
     val state: LiveData<TopicsState> = _state
 
     private val data: ArrayList<Topic?> = arrayListOf(null)
+
+    private val _topics: MutableLiveData<ArrayList<Topic?>> = MutableLiveData()
+    val topics: LiveData<ArrayList<Topic?>> = _topics
 
     private var hasNextPage = true
     private var maxPage = 1
@@ -39,29 +41,32 @@ class TopicsViewModel @Inject constructor(private val repository: TopicRepositor
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .map { response ->
                     if (response.isSuccessful) {
-                        val topics = response.body()
-
                         val pagesHeaders = response.headers()
                             .get(App.applicationContext().getString(R.string.header_link_label))
                             ?: ""
+                        val headerPageRegex = Regex(
+                            App.applicationContext().getString(R.string.header_page_regex)
+                        )
                         val nextPage =
-                            Regex(
-                                App.applicationContext().getString(R.string.header_page_regex)
-                            )
-                                .find(pagesHeaders)?.value?.filter { it.isDigit() }?.toIntOrNull()
+                            headerPageRegex.find(pagesHeaders)?.value?.filter { it.isDigit() }
+                                ?.toIntOrNull()
 
-                        ResponseData(TopicsItem(nextPage, topics!!), null)
-                    } else {
-                        ResponseData(null, response.message())
+                        processNextPage(nextPage)
                     }
+                    response
                 }
                 .subscribeBy(
                     onSuccess = { response ->
-                        if (response.data?.topics != null) {
-                            onSuccess(response.data)
+                        if (response.isSuccessful) {
+                            response.body()?.let {
+                                onSuccess(it)
+                            }
                         } else {
-                            onError(response.error)
+                            onError(response.errorBody().toString())
                         }
+                    },
+                    onError = {
+                        onError(it.message)
                     }
                 )
             )
@@ -72,22 +77,20 @@ class TopicsViewModel @Inject constructor(private val repository: TopicRepositor
         _state.postValue(TopicsState.DataLoadError(error))
     }
 
-    private fun onSuccess(response: TopicsItem) {
+    private fun onSuccess(topics: List<Topic>) {
         data.apply {
-            removeLast()
-            addAll(response.topics)
-            add(null)
+            data.removeLast()
+            addAll(topics)
+            if (hasNextPage) add(null)
         }
 
-        _state.postValue(TopicsState.DataLoaded(data))
-
-        processNextPage(response)
+        _topics.postValue(data)
+        _state.postValue(TopicsState.DataLoaded)
     }
 
-    private fun processNextPage(response: TopicsItem) {
-        if (response.nextPage == null) {
+    private fun processNextPage(nextPage: Int?) {
+        if (nextPage == null) {
             hasNextPage = false
-            data.removeLast()
         } else {
             maxPage++
         }

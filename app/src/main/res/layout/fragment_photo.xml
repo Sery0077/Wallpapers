@@ -44,6 +44,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:text="@string/set_as_wallpaper"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:visibility="gone" />
 
 </FrameLayout>

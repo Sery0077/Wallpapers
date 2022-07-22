@@ -30,6 +30,9 @@ class PhotosViewModel @AssistedInject constructor(
 
     private val data: ArrayList<Photo?> = arrayListOf(null)
 
+    private val _photos: MutableLiveData<ArrayList<Photo?>> = MutableLiveData()
+    val photos: LiveData<ArrayList<Photo?>> = _photos
+
     private var hasNextPage = true
     private var maxPage = 1
 
@@ -67,6 +70,9 @@ class PhotosViewModel @AssistedInject constructor(
                         } else {
                             onError(response.errorBody().toString())
                         }
+                    },
+                    onError = {
+                        onError(it.message)
                     }
                 )
             )
@@ -79,18 +85,18 @@ class PhotosViewModel @AssistedInject constructor(
 
     private fun onSuccess(photos: List<Photo>) {
         data.apply {
-            if (data.size > 0) removeLast()
+            data.removeLast()
             addAll(photos)
-            add(null)
+            if (hasNextPage) add(null)
         }
 
-        _state.postValue(PhotosState.DataLoaded(data))
+        _photos.postValue(data)
+        _state.postValue(PhotosState.DataLoaded)
     }
 
     private fun processNextPage(nextPage: Int?) {
         if (nextPage == null) {
             hasNextPage = false
-            data.removeLast()
         } else {
             maxPage++
         }

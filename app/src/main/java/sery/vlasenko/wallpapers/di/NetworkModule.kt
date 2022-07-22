@@ -62,7 +62,7 @@ class NetworkModule {
             .baseUrl(provideBaseUrl())
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-            .client(provideOkHttpClient())
+            .client(okHttpClient)
             .build()
 
     @Provides

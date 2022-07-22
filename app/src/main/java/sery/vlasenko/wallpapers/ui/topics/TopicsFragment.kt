@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import sery.vlasenko.wallpapers.databinding.FragmentTopicsBinding
 import sery.vlasenko.wallpapers.ui.base.BaseBindingFragment
 import sery.vlasenko.wallpapers.ui.topics.adapter.TopicsAdapter
 import sery.vlasenko.wallpapers.utils.SnackBarHelper
+import sery.vlasenko.wallpapers.utils.gone
+import sery.vlasenko.wallpapers.utils.visible
 
 @AndroidEntryPoint
 class TopicsFragment :
@@ -17,6 +20,8 @@ class TopicsFragment :
 
     override val model: TopicsViewModel by viewModels()
     private val adapter = TopicsAdapter(this)
+
+    private var errorSnackBar: Snackbar? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycler()
@@ -28,6 +33,10 @@ class TopicsFragment :
 
         model.state.observe(viewLifecycleOwner) {
             processState(it)
+        }
+
+        model.topics.observe(viewLifecycleOwner) {
+            adapter.submitList(it)
         }
     }
 
@@ -49,17 +58,21 @@ class TopicsFragment :
     private fun processState(state: TopicsState) {
         when (state) {
             is TopicsState.DataLoaded -> {
-                adapter.submitList(state.data)
-                binding.progressBar.visibility = View.GONE
-                binding.rvTopics.visibility = View.VISIBLE
+                errorSnackBar?.dismiss()
+                binding.progressBar.gone()
+                binding.rvTopics.visible()
             }
             is TopicsState.DataLoadError -> {
-                SnackBarHelper.errorSnackBar(binding.root) {
+                binding.progressBar.gone()
+                errorSnackBar = SnackBarHelper.errorSnackBar(binding.root) {
                     model.onErrorClick()
                 }
+                errorSnackBar?.show()
             }
             TopicsState.DataLoading -> {
-
+                errorSnackBar?.dismiss()
+                binding.progressBar.visible()
+                binding.rvTopics.gone()
             }
         }
     }

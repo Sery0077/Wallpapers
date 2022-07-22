@@ -1,7 +1,11 @@
 package sery.vlasenko.wallpapers.ui.photos.adapter
 
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_photo.view.*
 import sery.vlasenko.wallpapers.R
@@ -42,10 +46,25 @@ class PhotosAdapter(private val clickListener: ClickListener) : BaseAdapter() {
         override fun bind(item: RecyclerItem?) {
             (item as Photo)
 
+            val circularProgressDrawable = CircularProgressDrawable(itemView.context)
+
+            circularProgressDrawable.apply {
+                strokeWidth = 5f
+                centerRadius = 30f
+                colorFilter =
+                    PorterDuffColorFilter(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.teal_200
+                        ), PorterDuff.Mode.SRC_IN
+                    )
+                start()
+            }
+
             Glide.with(itemView.context)
                 .load(item.urls.thumb)
                 .centerCrop()
-                .placeholder(R.drawable.landscape_placeholder)
+                .placeholder(circularProgressDrawable)
                 .into(itemView.iv_photo)
 
             itemView.setOnClickListener {
