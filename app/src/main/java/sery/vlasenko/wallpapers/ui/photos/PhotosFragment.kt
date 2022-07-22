@@ -1,14 +1,15 @@
 package sery.vlasenko.wallpapers.ui.photos
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.databinding.FragmentPhotosBinding
+import sery.vlasenko.wallpapers.ui.ToolbarActivity
 import sery.vlasenko.wallpapers.ui.base.BaseBindingFragment
 import sery.vlasenko.wallpapers.ui.photos.adapter.PhotosAdapter
 import sery.vlasenko.wallpapers.utils.SnackBarHelper
@@ -24,7 +25,11 @@ class PhotosFragment :
 
     private val adapter = PhotosAdapter(this)
     private val topicId: String by lazy {
-        arguments?.getString(App.applicationContext().getString(R.string.topic_id_key)) ?: ""
+        arguments?.getString(requireContext().getString(R.string.topic_id_key)) ?: ""
+    }
+    private val topicTitle: String by lazy {
+        arguments?.getString(requireContext().getString(R.string.topic_title_key))
+            ?: requireContext().getString(R.string.topics_photos_fragment_label)
     }
 
     private var errorSnackBar: Snackbar? = null
@@ -36,9 +41,28 @@ class PhotosFragment :
         PhotosViewModel.PhotosViewModelFactory(topicId, factory)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ToolbarActivity) {
+            context.setToolbarTitle(topicTitle)
+        }
+    }
+
+    override fun onResume() {
+        setToolbarTitle()
+        super.onResume()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycler()
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun setToolbarTitle() {
+        val activity = requireActivity()
+        if (activity is ToolbarActivity) {
+            activity.setToolbarTitle(topicTitle)
+        }
     }
 
     override fun onStart() {

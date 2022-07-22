@@ -4,7 +4,7 @@
     <!--  Headers  -->
     <string name="header_link_label">link</string>
     <string name="header_page_regex">page=\\d+>; rel=\"next\"</string>
-    <!--    Snackbar-->
+    <!--  Snackbar  -->
     <string name="snackbar_error">Error loading</string>
     <string name="snackbar_action">Retry</string>
 
@@ -12,7 +12,13 @@
     <string name="set_as_wallpaper">Set as wallpaper</string>
 
     <!--  Keys  -->
-    <string name="topic_id_key">Topic_ID</string>
-    <string name="photo_id_key">Photo_ID</string>
+    <string name="topic_id_key">topic_ID</string>
+    <string name="photo_id_key">photo_ID</string>
+    <string name="topic_title_key">topic_title</string>
     <string name="success_set_wallpaper">Wallpaper successfully updated</string>
+
+    <!--  Fragment labels  -->
+    <string name="photo_fragment_label">Photo review</string>
+    <string name="topics_photos_fragment_label">Photos</string>
+    <string name="topics_fragment_label">Topics</string>
 </resources>

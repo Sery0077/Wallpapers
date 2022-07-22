@@ -98,7 +98,7 @@ class TopicsViewModel @Inject constructor(private val repository: TopicRepositor
 
     fun onTopicClick(pos: Int) {
         data[pos]?.let {
-            Router.navigateToPhotosFragment(it.id)
+            Router.navigateToPhotosFragment(it.id, it.title)
         }
     }
 

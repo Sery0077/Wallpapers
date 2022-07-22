@@ -17,6 +17,7 @@ import kotlinx.coroutines.*
 import sery.vlasenko.wallpapers.App
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.databinding.FragmentPhotoBinding
+import sery.vlasenko.wallpapers.ui.ToolbarActivity
 import sery.vlasenko.wallpapers.ui.base.BaseBindingFragment
 import sery.vlasenko.wallpapers.utils.SnackBarHelper
 import sery.vlasenko.wallpapers.utils.gone
@@ -40,6 +41,18 @@ class PhotoFragment :
 
     override val model: PhotoViewModel by viewModels {
         PhotoViewModel.PhotoViewModelFactory(photoId, factory)
+    }
+
+    override fun onResume() {
+        setToolbarTitle()
+        super.onResume()
+    }
+
+    private fun setToolbarTitle() {
+        val activity = requireActivity()
+        if (activity is ToolbarActivity) {
+            activity.setToolbarTitle(requireContext().getString(R.string.photo_fragment_label))
+        }
     }
 
 

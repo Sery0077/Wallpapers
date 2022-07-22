@@ -79,5 +79,5 @@ dependencies {
     implementation "com.otaliastudios:zoomlayout:$zoomLayoutVer"
 
     //
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swipeRefreshLayout"
 }

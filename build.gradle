@@ -50,4 +50,7 @@ ext {
 
     // ZoomLayout
     zoomLayoutVer = '1.9.0'
+
+    // SwipeRefreshLayout
+    swipeRefreshLayout = '1.1.0'
 }
