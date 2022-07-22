@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/topicsFragment"
         android:name="sery.vlasenko.wallpapers.ui.topics.TopicsFragment"
-        android:label="FragmentTopics">
+        android:label="@string/topics_fragment_label">
         <action
             android:id="@+id/action_topicsFragment_to_photosFragment"
             app:destination="@id/photosFragment" />
@@ -15,7 +15,7 @@
     <fragment
         android:id="@+id/photosFragment"
         android:name="sery.vlasenko.wallpapers.ui.photos.PhotosFragment"
-        android:label="PhotosFragment">
+        android:label="@string/topics_photos_fragment_label">
         <action
             android:id="@+id/action_photosFragment_to_photoFragment"
             app:destination="@id/photoFragment" />
@@ -23,5 +23,5 @@
     <fragment
         android:id="@+id/photoFragment"
         android:name="sery.vlasenko.wallpapers.ui.photo.PhotoFragment"
-        android:label="PhotoFragment" />
+        android:label="@string/photo_fragment_label" />
 </navigation>

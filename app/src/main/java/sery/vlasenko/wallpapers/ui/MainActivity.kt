@@ -11,7 +11,7 @@ import sery.vlasenko.wallpapers.databinding.ActivityMainBinding
 import sery.vlasenko.wallpapers.utils.Router
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToolbarActivity {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -37,5 +37,9 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         Router.setNavController(null)
         super.onDestroy()
+    }
+
+    override fun setToolbarTitle(title: String) {
+        supportActionBar?.title = title
     }
 }
