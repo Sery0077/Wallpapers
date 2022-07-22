@@ -17,4 +17,7 @@ interface UnsplashService {
         @Path("topic_id") topicId: String,
         @Query("page") page: Int,
     ): Single<Response<List<Photo>>>
+
+    @GET("/photos/{photo_id}")
+    fun getPhotoInfo(@Path("photo_id") photoId: String): Single<Photo>
 }

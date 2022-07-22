@@ -8,6 +8,7 @@ data class Photo(
 ) : RecyclerItem
 
 data class Urls(
+    val raw: String,
     val full: String,
     val thumb: String
 )

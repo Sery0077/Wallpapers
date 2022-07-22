@@ -13,4 +13,6 @@
 
     <!--  Keys  -->
     <string name="topic_id_key">Topic_ID</string>
+    <string name="photo_id_key">Photo_ID</string>
+    <string name="success_set_wallpaper">Wallpaper successfully updated</string>
 </resources>

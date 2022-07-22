@@ -16,5 +16,12 @@
         android:id="@+id/photosFragment"
         android:name="sery.vlasenko.wallpapers.ui.photos.PhotosFragment"
         android:label="PhotosFragment">
+        <action
+            android:id="@+id/action_photosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="sery.vlasenko.wallpapers.ui.photo.PhotoFragment"
+        android:label="PhotoFragment" />
 </navigation>

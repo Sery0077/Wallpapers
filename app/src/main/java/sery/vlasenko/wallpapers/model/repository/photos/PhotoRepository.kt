@@ -11,4 +11,7 @@ class PhotoRepository @Inject constructor(private val service: UnsplashService) 
 
     override fun getTopicsPhotos(topicId: String, page: Int): Single<Response<List<Photo>>> =
         service.getTopicsPhotos(topicId = topicId, page = page)
+
+    override fun getPhotoInfo(photoId: String): Single<Photo>
+    = service.getPhotoInfo(photoId)
 }

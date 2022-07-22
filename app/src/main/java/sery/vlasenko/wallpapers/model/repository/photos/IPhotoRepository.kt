@@ -6,4 +6,5 @@ import sery.vlasenko.wallpapers.model.pojo.Photo
 
 interface IPhotoRepository {
     fun getTopicsPhotos(topicId: String, page: Int): Single<Response<List<Photo>>>
+    fun getPhotoInfo(photoId: String): Single<Photo>
 }

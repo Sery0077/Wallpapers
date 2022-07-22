@@ -16,6 +16,7 @@ import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.model.pojo.Photo
 import sery.vlasenko.wallpapers.model.repository.photos.PhotoRepository
 import sery.vlasenko.wallpapers.ui.base.BaseViewModel
+import sery.vlasenko.wallpapers.utils.Router
 
 class PhotosViewModel @AssistedInject constructor(
     @Assisted("topicId") private val topicId: String,
@@ -104,7 +105,7 @@ class PhotosViewModel @AssistedInject constructor(
     }
 
     fun onItemClick(pos: Int) {
-        TODO()
+        Router.navigateToPhotoFragment(data[pos]!!.id)
     }
 
     class PhotosViewModelFactory @AssistedInject constructor(

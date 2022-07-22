@@ -47,4 +47,7 @@ ext {
 
     // RxJava
     rxJavaVer = '3.0.0'
+
+    // ZoomLayout
+    zoomLayoutVer = '1.9.0'
 }

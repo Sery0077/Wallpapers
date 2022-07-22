@@ -19,4 +19,10 @@ object Router {
         args.putString(App.applicationContext().getString(R.string.topic_id_key), topicId)
         navController?.navigate(R.id.action_topicsFragment_to_photosFragment, args)
     }
+
+    fun navigateToPhotoFragment(photoId: String) {
+        val args = Bundle()
+        args.putString(App.applicationContext().getString(R.string.photo_id_key), photoId)
+        navController?.navigate(R.id.action_photosFragment_to_photoFragment, args)
+    }
 }

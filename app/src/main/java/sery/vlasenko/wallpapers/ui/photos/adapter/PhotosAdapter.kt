@@ -41,6 +41,7 @@ class PhotosAdapter(private val clickListener: ClickListener) : BaseAdapter() {
     inner class PhotoVH(itemView: ItemPhotoBinding) : BaseVH(itemView) {
         override fun bind(item: RecyclerItem?) {
             (item as Photo)
+
             Glide.with(itemView.context)
                 .load(item.urls.thumb)
                 .centerCrop()
