@@ -1,17 +1,17 @@
-package sery.vlasenko.wallpapers.ui.topics.adapter
+package sery.vlasenko.wallpapers.ui.photos.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_topic.view.*
+import kotlinx.android.synthetic.main.item_photo.view.*
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.databinding.ItemLoadingBinding
-import sery.vlasenko.wallpapers.databinding.ItemTopicBinding
-import sery.vlasenko.wallpapers.model.pojo.Topic
+import sery.vlasenko.wallpapers.databinding.ItemPhotoBinding
+import sery.vlasenko.wallpapers.model.pojo.Photo
 import sery.vlasenko.wallpapers.ui.base.adapter.BaseAdapter
 import sery.vlasenko.wallpapers.ui.base.adapter.RecyclerItem
 
-class TopicsAdapter(private val clickListener: ClickListener) : BaseAdapter() {
+class PhotosAdapter(private val clickListener: ClickListener) : BaseAdapter() {
 
     companion object {
         const val ITEM = 0
@@ -22,8 +22,8 @@ class TopicsAdapter(private val clickListener: ClickListener) : BaseAdapter() {
         return when (viewType) {
             ITEM -> {
                 val binding =
-                    ItemTopicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-                TopicVH(binding)
+                    ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                PhotoVH(binding)
             }
             LOADING -> {
                 val binding =
@@ -38,21 +38,17 @@ class TopicsAdapter(private val clickListener: ClickListener) : BaseAdapter() {
         return if (currentList[position] == null) LOADING else ITEM
     }
 
-    inner class TopicVH(itemView: ItemTopicBinding) : BaseVH(itemView) {
+    inner class PhotoVH(itemView: ItemPhotoBinding) : BaseVH(itemView) {
         override fun bind(item: RecyclerItem?) {
-            (item as Topic)
-            with(itemView) {
-                topic_name.text = item.title
+            (item as Photo)
+            Glide.with(itemView.context)
+                .load(item.urls.thumb)
+                .centerCrop()
+                .placeholder(R.drawable.landscape_placeholder)
+                .into(itemView.iv_photo)
 
-                Glide.with(itemView.context)
-                    .load(item.preview_photos[0].urls.thumb)
-                    .placeholder(R.drawable.landscape_placeholder)
-                    .centerCrop()
-                    .into(topic_preview_photo)
-
-                setOnClickListener {
-                    clickListener.onItemClick(adapterPosition)
-                }
+            itemView.setOnClickListener {
+                clickListener.onItemClick(adapterPosition)
             }
         }
     }

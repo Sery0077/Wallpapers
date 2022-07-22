@@ -12,6 +12,7 @@ import sery.vlasenko.wallpapers.model.pojo.Topic
 import sery.vlasenko.wallpapers.model.repository.topics.TopicRepository
 import sery.vlasenko.wallpapers.ui.ResponseData
 import sery.vlasenko.wallpapers.ui.base.BaseViewModel
+import sery.vlasenko.wallpapers.utils.Router
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,6 +90,12 @@ class TopicsViewModel @Inject constructor(private val repository: TopicRepositor
             data.removeLast()
         } else {
             maxPage++
+        }
+    }
+
+    fun onTopicClick(pos: Int) {
+        data[pos]?.let {
+            Router.navigateToPhotosFragment(it.id)
         }
     }
 

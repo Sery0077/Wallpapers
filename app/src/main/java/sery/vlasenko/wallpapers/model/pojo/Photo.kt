@@ -1,9 +1,11 @@
 package sery.vlasenko.wallpapers.model.pojo
 
+import sery.vlasenko.wallpapers.ui.base.adapter.RecyclerItem
+
 data class Photo(
-    val id: String,
+    override val id: String,
     val urls: Urls
-)
+) : RecyclerItem
 
 data class Urls(
     val full: String,

@@ -1,22 +1,35 @@
-package sery.vlasenko.wallpapers.ui.topics
+package sery.vlasenko.wallpapers.ui.photos
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import sery.vlasenko.wallpapers.databinding.FragmentTopicsBinding
+import sery.vlasenko.wallpapers.App
+import sery.vlasenko.wallpapers.R
+import sery.vlasenko.wallpapers.databinding.FragmentPhotosBinding
 import sery.vlasenko.wallpapers.ui.base.BaseBindingFragment
-import sery.vlasenko.wallpapers.ui.topics.adapter.TopicsAdapter
+import sery.vlasenko.wallpapers.ui.photos.adapter.PhotosAdapter
 import sery.vlasenko.wallpapers.utils.SnackBarHelper
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class TopicsFragment :
-    BaseBindingFragment<FragmentTopicsBinding, TopicsViewModel>(FragmentTopicsBinding::inflate),
-    TopicsAdapter.ClickListener {
+class PhotosFragment :
+    BaseBindingFragment<FragmentPhotosBinding, PhotosViewModel>(FragmentPhotosBinding::inflate),
+    PhotosAdapter.ClickListener {
 
-    override val model: TopicsViewModel by viewModels()
-    private val adapter = TopicsAdapter(this)
+
+    private val adapter = PhotosAdapter(this)
+    private val topicId: String by lazy {
+        arguments?.getString(App.applicationContext().getString(R.string.topic_id_key)) ?: ""
+    }
+
+    @Inject
+    lateinit var factory: PhotosViewModel.PhotosViewModelFactory.PhotosViewModelAssistedFactory
+
+    override val model: PhotosViewModel by viewModels {
+        PhotosViewModel.PhotosViewModelFactory(topicId, factory)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycler()
@@ -32,9 +45,9 @@ class TopicsFragment :
     }
 
     private fun initRecycler() {
-        with(binding.rvTopics) {
+        with(binding.rvPhotos) {
             setHasFixedSize(true)
-            adapter = this@TopicsFragment.adapter
+            adapter = this@PhotosFragment.adapter
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -46,25 +59,25 @@ class TopicsFragment :
         }
     }
 
-    private fun processState(state: TopicsState) {
+    private fun processState(state: PhotosState) {
         when (state) {
-            is TopicsState.DataLoaded -> {
+            is PhotosState.DataLoaded -> {
                 adapter.submitList(state.data)
                 binding.progressBar.visibility = View.GONE
-                binding.rvTopics.visibility = View.VISIBLE
+                binding.rvPhotos.visibility = View.VISIBLE
             }
-            is TopicsState.DataLoadError -> {
+            is PhotosState.DataLoadError -> {
                 SnackBarHelper.errorSnackBar(binding.root) {
                     model.onErrorClick()
                 }
             }
-            TopicsState.DataLoading -> {
+            PhotosState.DataLoading -> {
 
             }
         }
     }
 
     override fun onItemClick(pos: Int) {
-        model.onTopicClick(pos)
+        model.onItemClick(pos)
     }
 }

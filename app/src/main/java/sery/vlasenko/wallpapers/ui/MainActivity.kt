@@ -8,6 +8,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import sery.vlasenko.wallpapers.R
 import sery.vlasenko.wallpapers.databinding.ActivityMainBinding
+import sery.vlasenko.wallpapers.utils.Router
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,6 +30,12 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(navController.graph)
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        Router.setNavController(navController)
         super.onPostCreate(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        Router.setNavController(null)
+        super.onDestroy()
     }
 }
