@@ -5,8 +5,9 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.3"
+        classpath "com.android.tools.build:gradle:7.0.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.0"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:2.38.1"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -15,4 +16,38 @@ buildscript {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 31
+    compileSdkVersion = 31
+
+    // Navigation
+    navigationVer = '2.5.0'
+
+    // Dependencies
+    coreKtxVer = '1.7.0'
+    appCompatVer = '1.4.1'
+    androidMaterialVer = '1.5.0'
+
+    // Fragment
+    fragmentKtxVer = '1.4.1'
+
+    // Glide
+    glideVer = '4.13.2'
+
+    // Retrofit
+    retrofitVer = '2.9.0'
+    retrofitMoshiConvVer = '2.9.0'
+
+    // Hilt
+    hiltVer = '2.38.1'
+
+    // RxJava
+    rxJavaVer = '3.0.0'
+
+    // ZoomLayout
+    zoomLayoutVer = '1.9.0'
 }

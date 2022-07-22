@@ -1,19 +1,29 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.secrets_gradle_plugin' version '0.4'
 }
 
 android {
-    compileSdk 31
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
         applicationId "sery.vlasenko.wallpapers"
-        minSdk 21
-        targetSdk 31
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "USPLASH_API", '"https://api.unsplash.com/"'
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     buildTypes {
@@ -36,8 +46,38 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVer"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVer"
+
+    // Tests
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVer"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVer"
+    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofitVer"
+    // Retrofit Moshi converter
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitMoshiConvVer"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$hiltVer"
+    kapt "com.google.dagger:hilt-compiler:$hiltVer"
+
+    // RxJava
+    implementation "io.reactivex.rxjava3:rxandroid:$rxJavaVer"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rxJavaVer"
+    implementation "io.reactivex.rxjava3:rxjava:$rxJavaVer"
+
+    // ZoomLayout
+    implementation "com.otaliastudios:zoomlayout:$zoomLayoutVer"
+
+    //
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }

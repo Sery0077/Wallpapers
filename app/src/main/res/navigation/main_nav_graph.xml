@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/topicsFragment">
+
+    <fragment
+        android:id="@+id/topicsFragment"
+        android:name="sery.vlasenko.wallpapers.ui.topics.TopicsFragment"
+        android:label="FragmentTopics">
+        <action
+            android:id="@+id/action_topicsFragment_to_photosFragment"
+            app:destination="@id/photosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photosFragment"
+        android:name="sery.vlasenko.wallpapers.ui.photos.PhotosFragment"
+        android:label="PhotosFragment">
+        <action
+            android:id="@+id/action_photosFragment_to_photoFragment"
+            app:destination="@id/photoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="sery.vlasenko.wallpapers.ui.photo.PhotoFragment"
+        android:label="PhotoFragment" />
+</navigation>

@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Wallpapers</string>
+
+    <!--  Headers  -->
+    <string name="header_link_label">link</string>
+    <string name="header_page_regex">page=\\d+>; rel=\"next\"</string>
+    <!--    Snackbar-->
+    <string name="snackbar_error">Error loading</string>
+    <string name="snackbar_action">Retry</string>
+
+    <!--  Button text  -->
+    <string name="set_as_wallpaper">Set as wallpaper</string>
+
+    <!--  Keys  -->
+    <string name="topic_id_key">Topic_ID</string>
+    <string name="photo_id_key">Photo_ID</string>
+    <string name="success_set_wallpaper">Wallpaper successfully updated</string>
 </resources>
